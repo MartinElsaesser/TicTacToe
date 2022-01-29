@@ -1,12 +1,12 @@
-var CACHE_NAME = 'tik-tak-toe';
+var CACHE_NAME = 'tic-tac-toe';
 var urlsToCache = [
-	'/TikTakToe/',
-	'/TikTakToe/index.html',
-	'/TikTakToe/CSS/app.css',
-	'/TikTakToe/sw.js',
-	'/TikTakToe/JS/Dispatcher.js',
-	'/TikTakToe/JS/Game.js',
-	'/TikTakToe/JS/app.js',
+	'/TicTacToe/',
+	'/TicTacToe/index.html',
+	'/TicTacToe/CSS/app.css',
+	'/TicTacToe/sw.js',
+	'/TicTacToe/JS/Dispatcher.js',
+	'/TicTacToe/JS/Game.js',
+	'/TicTacToe/JS/app.js',
 ];
 
 self.addEventListener('install', function (event) {

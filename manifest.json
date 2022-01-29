@@ -5,8 +5,8 @@
   "theme_color": "#ffc107",
   "background_color": "#001E3C",
   "display": "standalone",
-  "scope": "/TikTakToe/",
-  "start_url": "/TikTakToe/",
+  "scope": "/TicTacToe/",
+  "start_url": "/TicTacToe/",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",

@@ -57,7 +57,7 @@ class UI {
 new UI();
 
 if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('/TikTakToe/sw.js', { scope: '/TikTakToe/' }).then(function (reg) {
+	navigator.serviceWorker.register('/TicTacToe/sw.js', { scope: '/TicTacToe/' }).then(function (reg) {
 		// Registrierung erfolgreich
 		console.log('Registrierung erfolgreich. Scope ist ' + reg.scope);
 	}).catch(function (error) {
