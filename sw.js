@@ -6,7 +6,7 @@ var urlsToCache = [
 	'/TikTakToe/sw.js',
 	'/TikTakToe/JS/Dispatcher.js',
 	'/TikTakToe/JS/Game.js',
-	'/TikTakToe/JS/app.css',
+	'/TikTakToe/JS/app.js',
 ];
 
 self.addEventListener('install', function (event) {
