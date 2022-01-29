@@ -1,0 +1,161 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+	font-family: sans-serif;
+	padding-top: 1px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+}
+
+body {
+	max-width: 400px;
+}
+
+h1 {
+	font-size: 3rem;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+h2 {
+	margin-bottom: 30px;
+}
+
+#game {
+	width: calc(100% - 5px);
+	aspect-ratio: 1 / 1;
+	padding: 10px;
+}
+
+#game.won {
+	animation: won-pulse 10s linear infinite;
+}
+@keyframes won-pulse {
+	0% {
+		box-shadow: 0 0 4px 1px #97dd85, inset 0 0 4px 1px #97dd85;
+	}
+	50% {
+		box-shadow: 0 0 4px 2px #97dd85, inset 0 0 4px 2px #97dd85;
+	}
+	100% {
+		box-shadow: 0 0 4px 1px #97dd85, inset 0 0 4px 1px #97dd85;
+	}
+}
+#game.lost {
+	animation: lost-pulse 4s linear infinite;
+}
+@keyframes lost-pulse {
+	0% {
+		box-shadow: 0 0 4px 1px #be4535, inset 0 0 4px 1px #be4535;
+	}
+	50% {
+		box-shadow: 0 0 4px 2px #be4535, inset 0 0 4px 2px #be4535;
+	}
+	100% {
+		box-shadow: 0 0 4px 1px #be4535, inset 0 0 4px 1px #be4535;
+	}
+}
+#game.draw {
+	animation: draw-pulse 4s linear infinite;
+}
+
+@keyframes draw-pulse {
+	0% {
+		box-shadow: 0 0 4px 1px #d18241, inset 0 0 4px 1px #d18241;
+	}
+	50% {
+		box-shadow: 0 0 4px 2px #d18241, inset 0 0 4px 2px #d18241;
+	}
+	100% {
+		box-shadow: 0 0 4px 1px #d18241, inset 0 0 4px 1px #d18241;
+	}
+}
+
+.wrapper {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-flow: wrap;
+	gap: 3px;
+	background-color: black;
+	overflow: hidden;
+}
+
+.cell {
+	width: 30%;
+	flex-grow: 1;
+	background-color: #ffffff;
+	position: relative;
+	cursor: pointer;
+	transition: transform 0.05s linear;
+}
+@media (hover:hover) {
+	.cell:hover {
+		background-color: #fffeb0;
+	}
+}
+.cell:active {
+	background-color: #fffeb0;
+}
+
+.cell.filled {
+	background-color: #ffffff;
+	cursor: default;
+}
+
+
+.cell span{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	font-size: 3rem;
+	opacity: 0;
+	transition: opacity, transform 0.1s linear;
+}
+
+.cell.x span.x{
+	transform: translate(-50%, -50%) scale(1);
+	opacity: 1;
+}
+.cell.o span.o{
+	transform: translate(-50%, -50%) scale(1);
+	opacity: 1;
+}
+
+button.restart {
+	display: block;
+	-webkit-tap-highlight-color: transparent;
+	border: none;
+	transition: all 0.1s;
+	cursor: pointer;
+	width: 100%;
+	padding: 10px;
+	font-size: 1.5rem;
+	margin-top: 30px;
+}
+@media (hover: hover) {
+	button.restart:hover {
+		opacity: 0.9;
+		transform: scale(1.1);
+	}
+}
+button.restart:active {
+	opacity: 0.7;
+	transform: scale(1.05);
+}
+
+button:disabled {
+	pointer-events: none;
+}
