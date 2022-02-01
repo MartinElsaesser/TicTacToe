@@ -30,7 +30,7 @@ class Game extends Dispatcher {
 			else if (error && forcedMove) this._makeMove(forcedMove, false);
 			else this._makeMove(move, false)
 			this._calculateWin();
-		}, Game._randInt(100, 1000));
+		}, Game._randInt(100, 500));
 	}
 	restart() {
 		this.board = [".", ".", ".", ".", ".", ".", ".", ".", "."];
@@ -69,8 +69,10 @@ class Game extends Dispatcher {
 	}
 	_getMove() {
 		let freeCell = this.board.map((c, i) => (c !== "x" && c !== "o") && i).filter(v => v !== false);
-		let priority = [4, 0, 2, 6, 8, 1, 5, 7, 3];
-		let move = priority.find(cell => freeCell.includes(cell));
+		let cells = [0, 2, 6, 8, 1, 5, 7, 3].filter(cell => freeCell.includes(cell));
+		let priority = freeCell.includes(4) ? 4 : null;
+		// prioritize taking the middle, then continues with a random field
+		let move = priority || cells[Game._randInt(0, cells.length - 1)];
 		return move;
 	}
 	_calculateWin() {
@@ -98,6 +100,6 @@ class Game extends Dispatcher {
 		}
 	}
 	static _randInt(min, max) {
-		Math.floor(Math.random() * (max - min + 1)) + min;
+		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 }
