@@ -1,6 +1,6 @@
 class Game extends Dispatcher {
+	static winningPositions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [6, 4, 2]];
 	board = [".", ".", ".", ".", ".", ".", ".", ".", "."];
-	winningPositions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [6, 4, 2]];
 	gameEnd = false;
 	waitingForAi = false;
 	difficulty = 0.1;
@@ -16,19 +16,11 @@ class Game extends Dispatcher {
 	}
 	aiMove() {
 		if (this.gameEnd || !this.waitingForAi) return;
-		let xIs = this.board.map((c, i) => c === "x" && i).filter(v => v !== false);
-		let oIs = this.board.map((c, i) => c === "o" && i).filter(v => v !== false);
-
-		let forcedMove = this._getForcedMoves(xIs, oIs);
-		let winningMove = this._getWinningMove(xIs, oIs);
-		let move = this._getMove();
-		let error = Math.random() <= this.difficulty;
+		let ai = new AI(this.board, this.difficulty);
+		let move = ai.getMove(this.difficulty);
 
 		setTimeout(() => {
-			// movement code
-			if (error && winningMove) this._makeMove(winningMove, false);
-			else if (error && forcedMove) this._makeMove(forcedMove, false);
-			else this._makeMove(move, false)
+			this._makeMove(move, false)
 			this._calculateWin();
 		}, Game._randInt(100, 500));
 	}
@@ -47,34 +39,6 @@ class Game extends Dispatcher {
 		}
 		return false
 	}
-	_getForcedMoves(xIs, oIs) {
-		let oneXMissingI = null;
-		this.winningPositions.some((position) => { // find first position where one x is missing to win
-			let freeSpace = position.filter(cell => !xIs.includes(cell)); // sort out positions where xs are placed
-			let isForced = freeSpace.length === 1 && !oIs.includes(freeSpace[0]); // its not forced, if there is a o on free space
-			if (isForced) oneXMissingI = freeSpace[0]; // extracts position with one spot without a x, quit
-			return isForced;
-		});
-		return oneXMissingI;
-	}
-	_getWinningMove(xIs, oIs) {
-		let oneOMissingI = null;
-		this.winningPositions.some((position) => { // find first position where one o is missing to win
-			let freeSpace = position.filter(cell => !oIs.includes(cell)); // get positions without os
-			let isWinning = freeSpace.length === 1 && !xIs.includes(freeSpace[0]); // two os in position and no x on space
-			if (isWinning) oneOMissingI = freeSpace[0]; // extracts position with one spot without a x
-			return isWinning;
-		});
-		return oneOMissingI;
-	}
-	_getMove() {
-		let freeCell = this.board.map((c, i) => (c !== "x" && c !== "o") && i).filter(v => v !== false);
-		let cells = [0, 2, 6, 8, 1, 5, 7, 3].filter(cell => freeCell.includes(cell));
-		let priority = freeCell.includes(4) ? 4 : null;
-		// prioritize taking the middle, then continues with a random field
-		let move = priority || cells[Game._randInt(0, cells.length - 1)];
-		return move;
-	}
 	_calculateWin() {
 		let xIs = this.board.map((c, i) => c === "x" && i).filter(v => v !== false);
 		let oIs = this.board.map((c, i) => c === "o" && i).filter(v => v !== false);
@@ -82,7 +46,7 @@ class Game extends Dispatcher {
 		let playerWon;
 		let aiWon;
 
-		this.winningPositions.forEach((position) => {
+		Game.winningPositions.forEach((position) => {
 			if (!playerWon) playerWon = position.every(pos => xIs.includes(pos));
 			if (!aiWon) aiWon = position.every(pos => oIs.includes(pos));
 		});
