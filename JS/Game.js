@@ -18,7 +18,6 @@ class Game extends Dispatcher {
 		if (this.gameEnd || !this.waitingForAi) return;
 		let ai = new AI(this.board, this.difficulty);
 		let move = ai.getMove(this.difficulty);
-
 		setTimeout(() => {
 			this._makeMove(move, false)
 			this._calculateWin();
