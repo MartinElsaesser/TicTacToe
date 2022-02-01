@@ -26,8 +26,8 @@ class Game extends Dispatcher {
 
 		setTimeout(() => {
 			// movement code
-			if (error && forcedMove) this._makeMove(forcedMove, false);
-			else if (error && winningMove) this._makeMove(winningMove, false);
+			if (error && winningMove) this._makeMove(winningMove, false);
+			else if (error && forcedMove) this._makeMove(forcedMove, false);
 			else this._makeMove(move, false)
 			this._calculateWin();
 		}, Game._randInt(100, 1000));
