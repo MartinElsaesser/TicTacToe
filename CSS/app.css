@@ -6,9 +6,26 @@
 }
 
 html, body {
+	font-family: sans-serif;
 	width: 100%;
 	height: 100%;
-	font-family: sans-serif;
+	color: #001E3C;
+}
+
+.app {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	max-width: 400px;
+	width: 100%;
+	height: 100%;
 	padding-top: 1px;
 	display: flex;
 	flex-direction: column;
@@ -17,24 +34,22 @@ html, body {
 	justify-content: center;
 }
 
-body {
-	max-width: 400px;
-}
-
-h1 {
-	font-size: 3rem;
-	text-align: center;
-	margin-bottom: 30px;
-}
-
-h2 {
-	margin-bottom: 30px;
+.head {
+	width: 100%;
+	background-color: #ffc107;
+	color: #001E3C;
+	padding: 20px 30px;
+	font-size: 1.3rem;
 }
 
 #game {
-	width: calc(100% - 5px);
+	width: 100%;
 	aspect-ratio: 1 / 1;
 	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-flow: wrap;
+	overflow: hidden;
 }
 
 #game.won {
@@ -81,17 +96,6 @@ h2 {
 	}
 }
 
-.wrapper {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	flex-flow: wrap;
-	gap: 3px;
-	background-color: black;
-	overflow: hidden;
-}
-
 .cell {
 	width: 30%;
 	flex-grow: 1;
@@ -99,14 +103,15 @@ h2 {
 	position: relative;
 	cursor: pointer;
 	transition: transform 0.05s linear;
+	border: 1px solid #001E3C;
 }
 @media (hover:hover) {
 	.cell:hover {
-		background-color: #fffeb0;
+		background-color: #dce4fd;
 	}
 }
 .cell:active {
-	background-color: #fffeb0;
+	background-color: #dce4fd;
 }
 
 .cell.filled {
@@ -134,7 +139,12 @@ h2 {
 	opacity: 1;
 }
 
-button.restart {
+.buttons {
+	display: flex;
+	width: 100%;
+}
+
+button {
 	display: block;
 	-webkit-tap-highlight-color: transparent;
 	border: none;
@@ -146,16 +156,21 @@ button.restart {
 	margin-top: 30px;
 }
 @media (hover: hover) {
-	button.restart:hover {
+	button:hover {
+		color: #171e25;
 		opacity: 0.9;
-		transform: scale(1.1);
 	}
 }
-button.restart:active {
-	opacity: 0.7;
-	transform: scale(1.05);
+button:active {
+	opacity: 0.6;
 }
 
 button:disabled {
 	pointer-events: none;
+}
+button.restart {
+	background-color: #FF4507;
+}
+button.new-round {
+	background-color: #c1ff07;
 }

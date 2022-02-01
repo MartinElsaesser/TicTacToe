@@ -24,6 +24,15 @@ class Game extends Dispatcher {
 		}, Game._randInt(100, 500));
 	}
 	restart() {
+		this.difficulty = 0.1;
+		this.board = [".", ".", ".", ".", ".", ".", ".", ".", "."];
+		this.gameEnd = false;
+		this.waitingForAi = false;
+		this.playerScore = 0;
+		this.aiScore = 0;
+		this.dispatch("update-score", { playerScore: 0, aiScore: 0 })
+	}
+	newRound() {
 		this.board = [".", ".", ".", ".", ".", ".", ".", ".", "."];
 		this.gameEnd = false;
 		this.waitingForAi = false;
@@ -57,10 +66,11 @@ class Game extends Dispatcher {
 			this.dispatch("end", { won: true, winner: "player", playerScore: this.playerScore, aiScore: this.aiScore });
 		} else if (aiWon) {
 			this.aiScore++;
-			this.dispatch("end", { won: true, winner: "computer", playerScore: this.playerScore, aiScore: this.aiScore });
+			this.dispatch("end", { won: true, winner: "computer", });
 		} else if (!this.board.includes(".")) { // no one won and all tiles are filed -> draw
 			this.dispatch("end", { won: false, playerScore: this.playerScore, aiScore: this.aiScore }); // draw
 		}
+		this.dispatch("update-score", { playerScore: this.playerScore, aiScore: this.aiScore })
 	}
 	static _randInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;

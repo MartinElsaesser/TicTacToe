@@ -2,6 +2,7 @@ class UI {
 	constructor() {
 		this.cells = document.querySelectorAll(".cell");
 		this.restart = document.querySelector("button.restart");
+		this.newRound = document.querySelector("button.new-round");
 		this.field = document.querySelector("#game")
 		this.score = document.querySelector(".score")
 		this.game = new Game();
@@ -18,12 +19,17 @@ class UI {
 		});
 		// restart button
 		this.restart.addEventListener("click", () => {
-			this.restart.disabled = true;
-			this.cells.forEach((cell, i) => {
-				cell.classList.remove("filled", "x", "o");
-			});
+			this.newRound.disabled = true;
+			this.emptyCells();
 			this.field.classList.remove("won", "lost", "draw");
 			this.game.restart();
+		});
+		// new game button
+		this.newRound.addEventListener("click", () => {
+			this.newRound.disabled = true;
+			this.emptyCells();
+			this.field.classList.remove("won", "lost", "draw");
+			this.game.newRound();
 		});
 	}
 	listenToGame() {
@@ -40,16 +46,24 @@ class UI {
 		});
 		// game ended
 		this.game.on("end", ({ won, winner, playerScore, aiScore }) => {
-			this.restart.disabled = false;
+			this.newRound.disabled = false;
 			this.cells.forEach((cell, i) => {
 				cell.classList.add("filled");
 			});
-			this.score.textContent = `${playerScore}:${aiScore}`;
 			if (won) {
 				this.field.classList.add(winner === "computer" ? "lost" : "won");
 			} else {
 				this.field.classList.add("draw");
 			}
+		});
+		// update score
+		this.game.on("update-score", ({ playerScore, aiScore }) => {
+			this.score.textContent = `${playerScore}:${aiScore}`;
+		})
+	}
+	emptyCells() {
+		this.cells.forEach((cell, i) => {
+			cell.classList.remove("filled", "x", "o");
 		});
 	}
 }
